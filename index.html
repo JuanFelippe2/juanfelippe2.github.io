@@ -1,1 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<title>NexusGG - E-Sports</title>
+
+<style>
+body{
+    margin:0;
+    background:#111;
+    color:white;
+    font-family:Arial;
+}
+
+header{
+    background:#000;
+    text-align:center;
+    padding:20px;
+    border-bottom:3px solid #ff5500;
+}
+
+h1,h2{
+    color:#ff5500;
+}
+
+button{
+    background:#222;
+    color:white;
+    border:1px solid #ff5500;
+    padding:8px;
+    margin:3px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#ff5500;
+    color:#000;
+}
+
+main{
+    width:90%;
+    max-width:1100px;
+    margin:auto;
+}
+
+.jogos,.times,.jogadores{
+    display:flex;
+    flex-wrap:wrap;
+    gap:15px;
+}
+
+.jogo,.time{
+    background:#222;
+    border:1px solid #444;
+    padding:15px;
+    border-radius:5px;
+}
+
+.jogo{
+    width:120px;
+    text-align:center;
+    cursor:pointer;
+}
+
+.jogo img{
+    width:70px;
+}
+
+.time{
+    width:320px;
+}
+
+.jogador{
+    display:inline-block;
+    width:90px;
+    margin:5px;
+    background:#111;
+    cursor:pointer;
+    vertical-align:top;
+}
+
+.jogador img{
+    width:90px;
+    height:105px;
+    object-fit:cover;
+}
+
+.jogador p{
+    margin:5px;
+    font-size:12px;
+}
+
+.jogador small{
+    color:#ff5500;
+}
+
+.info{
+    display:none;
+    background:#222;
+    border:2px solid #ff5500;
+    padding:20px;
+    margin:30px 0;
+}
+
+.info img{
+    width:150px;
+    height:190px;
+    object-fit:cover;
+}
+
+footer{
+    margin-top:40px;
+    padding:30px;
+    text-align:center;
+    background:#000;
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+<h1>NEXUSGG</h1>
+
+<button onclick="mostrar('inicio')">Início</button>
+<button onclick="mostrar('dota')">Dota 2</button>
+<button onclick="mostrar('valorant')">Valorant</button>
+<button onclick="mostrar('cs2')">CS2</button>
+<button onclick="mostrar('lol')">LoL</button>
+<button onclick="mostrar('rocket')">Rocket League</button>
+<button onclick="mostrar('ea')">EA FC</button>
+
+</header>
+
+<main>
+
+<div id="inicio">
+
+<h2>🎮 Jogos</h2>
+
+<div class="jogos">
+
+<div class="jogo" onclick="mostrar('dota')">
+<img src="https://placehold.co/100/222/ff5500?text=DOTA">
+<p>Dota 2</p>
+</div>
+
+<div class="jogo" onclick="mostrar('valorant')">
+<img src="https://placehold.co/100/222/ff5500?text=VAL">
+<p>Valorant</p>
+</div>
+
+<div class="jogo" onclick="mostrar('cs2')">
+<img src="https://placehold.co/100/222/ff5500?text=CS2">
+<p>CS2</p>
+</div>
+
+<div class="jogo" onclick="mostrar('lol')">
+<img src="https://placehold.co/100/222/ff5500?text=LOL">
+<p>League of Legends</p>
+</div>
+
+<div class="jogo" onclick="mostrar('rocket')">
+<img src="https://placehold.co/100/222/ff5500?text=RL">
+<p>Rocket League</p>
+</div>
+
+<div class="jogo" onclick="mostrar('ea')">
+<img src="https://placehold.co/100/222/ff5500?text=EA">
+<p>EA FC</p>
+</div>
+
+</div>
+
+<h2>🔥 Sobre o site</h2>
+
+<p>
+O NexusGG é um site sobre E-Sports.
+Aqui é possível conhecer alguns jogos, equipes e
+jogadores profissionais.
+</p>
+
+</div>
+
+
+<!-- DOTA 2 -->
+
+<div id="dota" style="display:none">
+
+<h2>⚔️ Dota 2</h2>
+
+<div class="times" id="timesDota"></div>
+
+</div>
+
+
+<!-- VALORANT -->
+
+<div id="valorant" style="display:none">
+
+<h2> Valorant</h2>
+
+<div class="times" id="timesValorant"></div>
+
+</div>
+
+
+<!-- CS2 -->
+
+<div id="cs2" style="display:none">
+
+<h2> Counter-Strike 2</h2>
+
+<div class="times" id="timesCS"></div>
+
+</div>
+
+
+<!-- LOL -->
+
+<div id="lol" style="display:none">
+
+<h2> League of Legends</h2>
+
+<div class="times" id="timesLOL"></div>
+
+</div>
+
+
+<!-- ROCKET LEAGUE -->
+
+<div id="rocket" style="display:none">
+
+<h2> Rocket League</h2>
+
+<div class="times" id="timesRL"></div>
+
+</div>
+
+
+<!-- EA FC -->
+
+<div id="ea" style="display:none">
+
+<h2> EA Sports FC</h2>
+
+<div class="times" id="timesEA"></div>
+
+</div>
+
+
+<!-- INFORMAÇÃO DO JOGADOR -->
+
+<div class="info" id="info">
+
+<img id="foto">
+
+<h2 id="nome"></h2>
+
+<p id="funcao"></p>
+
+<p id="time"></p>
+
+<p id="descricao"></p>
+
+<button onclick="fechar()">Fechar</button>
+
+</div>
+
+</main>
+
+
+<footer>
+
+NEXUSGG - Tudo sobre E-Sports
+
+</footer>
+
+
+<script>
+
+/*
+    LISTA DE JOGADORES
+
+    Para adicionar um jogador,
+    basta copiar uma linha e trocar
+    os dados.
+*/
+
+const times={
+
+Dota:[
+{
+nome:"Team Spirit",
+jogadores:[
+["Yatoro","Carry","Um dos jogadores conhecidos da equipe."],
+["Collapse","Offlane","Jogador conhecido por suas jogadas."],
+["Larl","Mid","Atua na posição Mid."],
+["Miposhka","Support","Jogador experiente de suporte."],
+["panto","Support","Atua como jogador de suporte."]
+]
+},
+{
+nome:"Gaimin Gladiators",
+jogadores:[
+["Ace","Offlane","Jogador conhecido por sua experiência."],
+["Quinn","Mid","Um dos principais jogadores da equipe."],
+["Watson","Carry","Atua na posição Carry."],
+["Tofu","Support","Jogador de suporte."],
+["Seleri","Support","Capitão e jogador experiente."]
+]
+}
+],
+
+Valorant:[
+{
+nome:"FNATIC",
+jogadores:[
+["Boaster","IGL","Capitão e jogador experiente."],
+["crashies","Initiator","Jogador de suporte e criação de jogadas."],
+["Chronicle","Flex","Pode atuar com diferentes agentes."],
+["kaajak","Duelist","Jogador de estilo agressivo."],
+["Alfajer","Sentinel","Conhecido por sua habilidade defensiva."]
+]
+},
+{
+nome:"Sentinels",
+jogadores:[
+["johnqt","IGL","Capitão da equipe."],
+["zekken","Duelist","Jogador conhecido pelo estilo agressivo."],
+["TenZ","Player","Um dos nomes mais conhecidos do Valorant."],
+["bang","Controller","Atua como Controller."],
+["N4RRATE","Duelist","Jogador de estilo ofensivo."]
+]
+}
+],
+
+CS:[
+{
+nome:"NAVI",
+jogadores:[
+["Aleksib","IGL","Capitão da equipe."],
+["iM","Rifler","Jogador de rifle."],
+["b1t","Rifler","Conhecido por sua precisão."],
+["w0nderful","AWPer","Principal jogador de AWP."],
+["makazze","Rifler","Jogador jovem da equipe."]
+]
+},
+{
+nome:"Vitality",
+jogadores:[
+["apEX","IGL","Capitão e jogador experiente."],
+["ZywOo","AWPer","Conhecido por sua habilidade com AWP."],
+["mezii","Rifler","Atua como rifler."],
+["flameZ","Rifler","Jogador agressivo."],
+["ropz","Rifler","Jogador conhecido pela precisão."]
+]
+}
+],
+
+LOL:[
+{
+nome:"T1",
+jogadores:[
+["Faker","Mid","Uma das maiores lendas do LoL."],
+["Oner","Jungle","Jogador da posição Jungle."],
+["Doran","Top","Atua na rota superior."],
+["Gumayusi","ADC","Jogador da posição ADC."],
+["Keria","Support","Um dos suportes conhecidos do cenário."]
+]
+},
+{
+nome:"Gen.G",
+jogadores:[
+["Kiin","Top","Jogador da rota superior."],
+["Canyon","Jungle","Jogador experiente da Jungle."],
+["Chovy","Mid","Conhecido pelo grande nível individual."],
+["Ruler","ADC","Um dos ADCs mais conhecidos."],
+["Duro","Support","Jogador de suporte."]
+]
+}
+],
+
+RL:[
+{
+nome:"Karmine Corp",
+jogadores:[
+["Vatira","Player","Conhecido por sua habilidade mecânica."],
+["Atow","Player","Jogador ofensivo."],
+["ExoTiiK","Player","Conhecido por sua consistência."]
+]
+},
+{
+nome:"Vitality",
+jogadores:[
+["Zen","Player","Conhecido por sua habilidade mecânica."],
+["Alpha54","Player","Jogador experiente."],
+["Radosin","Player","Atua no time europeu."]
+]
+}
+],
+
+EA:[
+{
+nome:"FURIA",
+jogadores:[
+["Tekkz","EA FC","Jogador conhecido no futebol virtual."],
+["Vejrgang","EA FC","Jogador competitivo de EA FC."],
+["Phzin","EA FC","Jogador brasileiro de futebol virtual."]
+]
+},
+{
+nome:"Manchester City",
+jogadores:[
+["Stokes","EA FC","Jogador profissional de EA FC."],
+["Matias","EA FC","Atua no cenário competitivo."],
+["Young","EA FC","Jogador de futebol virtual."]
+]
+}
+]
+
+};
+
+
+/*
+    CRIA OS TIMES NA PÁGINA
+*/
+
+function criarTimes(lista,id){
+
+let area=document.getElementById(id);
+
+lista.forEach(time=>{
+
+let div=document.createElement("div");
+
+div.className="time";
+
+div.innerHTML=
+"<h3>"+time.nome+"</h3>"+
+"<p>Jogadores da equipe:</p>"+
+'<div class="jogadores"></div>';
+
+let jogadores=div.querySelector(".jogadores");
+
+time.jogadores.forEach(j=>{
+
+let jogador=document.createElement("div");
+
+jogador.className="jogador";
+
+jogador.innerHTML=
+'<img src="https://placehold.co/300x400/222/ff5500?text='+
+j[0].replace(" ","+")+'">'+
+"<p>"+j[0]+"</p>"+
+"<small>"+j[1]+"</small>";
+
+jogador.onclick=function(){
+
+abrirInfo(
+j[0],
+j[1],
+time.nome,
+j[2],
+"https://placehold.co/300x400/222/ff5500?text="+
+j[0].replace(" ","+")
+);
+
+};
+
+jogadores.appendChild(jogador);
+
+});
+
+area.appendChild(div);
+
+});
+
+}
+
+
+/*
+    CRIA OS TIMES
+*/
+
+criarTimes(times.Dota,"timesDota");
+criarTimes(times.Valorant,"timesValorant");
+criarTimes(times.CS,"timesCS");
+criarTimes(times.LOL,"timesLOL");
+criarTimes(times.RL,"timesRL");
+criarTimes(times.EA,"timesEA");
+
+
+/*
+    TROCA DE JOGO
+*/
+
+function mostrar(id){
+
+let paginas=[
+"inicio",
+"dota",
+"valorant",
+"cs2",
+"lol",
+"rocket",
+"ea"
+];
+
+paginas.forEach(function(p){
+
+document.getElementById(p).style.display="none";
+
+});
+
+document.getElementById(id).style.display="block";
+
+window.scrollTo(0,0);
+
+}
+
+
+/*
+    MOSTRA INFORMAÇÃO
+*/
+
+function abrirInfo(nome,funcao,time,descricao,foto){
+
+document.getElementById("info").style.display="block";
+
+document.getElementById("foto").src=foto;
+
+document.getElementById("nome").innerText=nome;
+
+document.getElementById("funcao").innerText=
+"Função: "+funcao;
+
+document.getElementById("time").innerText=
+"Equipe: "+time;
+
+document.getElementById("descricao").innerText=
+descricao;
+
+}
+
+
+/*
+    FECHA INFORMAÇÃO
+*/
+
+function fechar(){
+
+document.getElementById("info").style.display="none";
+
+}
+
+</script>
+
+</body>
+</html>
 
